@@ -1,0 +1,9 @@
+{
+  "name": "ma_thesis_cds_ondraszek_2023",
+  "version": "1.0.0",
+  "dependencies": {
+    "neo4j": "^2.0.0-RC2",
+    "rdfxml-streaming-parser": "^2.2.2",
+    "shared": "^0.2.0"
+  }
+}

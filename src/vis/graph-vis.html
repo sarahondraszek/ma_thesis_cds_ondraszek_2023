@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!--  USED
+  https://github.com/Rathachai/d3rdf/blob/master/index.html
+  https://javascript.hotexamples.com/fr/examples/n3/Store/-/javascript-store-class-examples.html
+  https://github.com/rdfjs/N3.js/tree/v0.11.0#utility
+
+  TBA
+  https://observablehq.com/@aaronbrezel/firers-network-simplified
+  https://github.com/eisman/neo4jd3
+  https://www.digitalocean.com/community/tutorials/how-to-create-custom-components-in-react
+  -->
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <script src="http://www.jibbering.com/rdf-parser/parser.js"></script>
+  <script src="https://unpkg.com/n3/browser/n3.min.js"></script>
+
+  <script type="module">
+        import * as fs from 'fs';
+  </script>
+
+  <script type="text/javascript">
+
+    var parser = new N3.Parser();
+    const { DataFactory } = N3;
+    const { namedNode, literal, defaultGraph, quad } = DataFactory;
+    const store = new N3.Store();
+
+    fs.exists('cartoons.ttl', function (exists) {
+    if (!exists) return triples.close();
+    triples.source = fs.createReadStream(filename).pipe(N3.StreamParser());
+  });
+  triples.on('error', console.error);
+
+    parser.parse (
+            `PREFIX c: <http://example.org/cartoons#>
+                    c:Tom a c:Cat.
+                    c:Jerry a c:Mouse;
+                    c:smarterThan c:Tom;
+                    c:thickBeans c: c:Beans.`,
+            function (error, triple, prefixes) {
+              if (error) {
+                console.log(error);
+              } else if (triple) {
+                store.add(triple);
+              } else {
+                console.log("# That's it, folks!");
+              }
+            });
+
+  </script>
+
+  <style type="text/css">
+    .node {
+      stroke: #fff;
+      fill:#ddd;
+      stroke-width: 1.5px;
+    }
+
+    .link {
+      stroke: #999;
+      stroke-opacity: .6;
+      stroke-width: 1px;
+    }
+
+    marker {
+      stroke: #999;
+      fill:rgba(124,240,10,0);
+    }
+
+    .node-text {
+      font: 11px sans-serif;
+      fill:black;
+    }
+
+    .link-text {
+      font: 9px sans-serif;
+      fill:grey;
+    }
+
+    svg{
+      border:1px solid black;
+    }
+  </style>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  <script src="http://d3js.org/d3.v3.min.js"></script>
+  <script>
+    function filterNodesById(nodes,id){
+      return nodes.filter(function(n) { return n.id === id; });
+    }
+
+    function triplesToGraph(triples){
+
+      svg.html("");
+      //Graph
+      var graph={nodes:[], links:[]};
+
+      //Initial Graph from triples
+      triples.forEach(function(triple){
+        var subjId = triple.subject;
+        var predId = triple.predicate;
+        var objId = triple.object;
+
+        var subjNode = filterNodesById(graph.nodes, subjId)[0];
+        var objNode  = filterNodesById(graph.nodes, objId)[0];
+
+        if(subjNode==null){
+          subjNode = {id:subjId, label:subjId, weight:1};
+          graph.nodes.push(subjNode);
+        }
+
+        if(objNode==null){
+          objNode = {id:objId, label:objId, weight:1};
+          graph.nodes.push(objNode);
+        }
+
+
+        graph.links.push({source:subjNode, target:objNode, predicate:predId, weight:1});
+      });
+
+      return graph;
+    }
+
+
+    function update(){
+      // ==================== Add Marker ====================
+      svg.append("svg:defs").selectAll("marker")
+              .data(["end"])
+              .enter().append("svg:marker")
+              .attr("id", String)
+              .attr("viewBox", "0 -5 10 10")
+              .attr("refX", 30)
+              .attr("refY", -0.5)
+              .attr("markerWidth", 6)
+              .attr("markerHeight", 6)
+              .attr("orient", "auto")
+              .append("svg:polyline")
+              .attr("points", "0,-5 10,0 0,5")
+      ;
+
+      // ==================== Add Links ====================
+      var links = svg.selectAll(".link")
+              .data(graph.links)
+              .enter()
+              .append("line")
+              .attr("marker-end", "url(#end)")
+              .attr("class", "link")
+              .attr("stroke-width",1)
+      ;//links
+
+      // ==================== Add Link Names =====================
+      var linkTexts = svg.selectAll(".link-text")
+              .data(graph.links)
+              .enter()
+              .append("text")
+              .attr("class", "link-text")
+              .text( function (d) { return d.predicate; })
+      ;
+
+      //linkTexts.append("title")
+      //		.text(function(d) { return d.predicate; });
+
+      // ==================== Add Link Names =====================
+      var nodeTexts = svg.selectAll(".node-text")
+              .data(graph.nodes)
+              .enter()
+              .append("text")
+              .attr("class", "node-text")
+              .text( function (d) { return d.label; })
+      ;
+
+      //nodeTexts.append("title")
+      //		.text(function(d) { return d.label; });
+
+      // ==================== Add Node =====================
+      var nodes = svg.selectAll(".node")
+              .data(graph.nodes)
+              .enter()
+              .append("circle")
+              .attr("class", "node")
+              .attr("r",8)
+              .call(force.drag)
+      ;//nodes
+
+      // ==================== Force ====================
+      force.on("tick", function() {
+        nodes
+                .attr("cx", function(d){ return d.x; })
+                .attr("cy", function(d){ return d.y; })
+        ;
+
+        links
+                .attr("x1", 	function(d)	{ return d.source.x; })
+                .attr("y1", 	function(d) { return d.source.y; })
+                .attr("x2", 	function(d) { return d.target.x; })
+                .attr("y2", 	function(d) { return d.target.y; })
+        ;
+
+        nodeTexts
+                .attr("x", function(d) { return d.x + 12 ; })
+                .attr("y", function(d) { return d.y + 3; })
+        ;
+
+
+        linkTexts
+                .attr("x", function(d) { return 4 + (d.source.x + d.target.x)/2  ; })
+                .attr("y", function(d) { return 4 + (d.source.y + d.target.y)/2 ; })
+        ;
+      });
+
+      // ==================== Run ====================
+      force
+              .nodes(graph.nodes)
+              .links(graph.links)
+              .charge(-500)
+              .linkDistance(100)
+              .start()
+      ;
+    }
+
+
+  </script>
+
+</head>
+<body style="margin:20px;">
+<h1>Visualizing RDF using D3</h1>
+<div id="svg-body" class="panel-body"></div>
+<script>
+
+  var triples_list = [];
+  for (const quad of store) {
+    console.log(quad)
+    var triples_dict = {};
+    triples_dict["subject"] = quad.subject.id;
+    triples_dict["predicate"] = quad.predicate.id;
+    triples_dict["object"] = quad.object.id;
+    triples_list.push(triples_dict)
+  }
+
+  // for (const x of triples_list) { console.log(JSON.stringify(x)); }
+
+  //
+  //
+  // var triples = [
+  //     ,
+  //     {subject:"ex:TomYumKung", 	predicate:"rdf:type", 		object:"ex:SpicyFood"},
+  //     {subject:"ex:TomYumKung", 	predicate:"ex:includes", 	object:"ex:shrimp"},
+  //     {subject:"ex:TomYumKung", 	predicate:"ex:includes", 	object:"ex:chilly"},
+  //     {subject:"ex:TomYumKung", 	predicate:"ex:includes", 	object:"ex:lemon"},
+  //     {subject:"ex:lemon", 		predicate:"ex:hasTaste", 	object:"ex:sour"},
+  //     {subject:"ex:chilly", 		predicate:"ex:hasTaste", 	object:"ex:spicy"}
+  // ];
+
+  var svg = d3.select("#svg-body").append("svg")
+          .attr("width", 800)
+          .attr("height", 600)
+  ;
+
+  var force = d3.layout.force().size([800, 600]);
+
+  var graph = triplesToGraph(triples_list);
+
+  update();
+
+</script>
+
+
+<footer style="margin-top:40px; padding:20px; height:50px; border-top:1px solid #eee; background:#fafafa; text-align:center">
+  By: <strong>Rathachai Chawuthai</strong>
+  <br/>
+  <a target="_blank" href="https://github.com/Rathachai">GitHub</a> | <a target="_blank" href="https://www.linkedin.com/in/rathachai">LinkedIn</a>
+</footer>
+</body>
+</html>

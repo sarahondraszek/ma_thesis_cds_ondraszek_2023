@@ -1,0 +1,208 @@
+
+
+<!-- Styles -->
+<style>
+#chartdiv {
+  width: 50%;
+  height: 500px;
+}
+</style>
+
+<!-- Resources -->
+<script src="https://cdn.amcharts.com/lib/5/index.js"></script>
+<script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
+<script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
+<script src="https://cdn.amcharts.com/lib/5/plugins/exporting.js"></script>
+
+<!-- Chart code -->
+<script>
+am5.ready(function() {
+
+// Create root element
+// https://www.amcharts.com/docs/v5/getting-started/#Root_element
+var root = am5.Root.new("chartdiv");
+
+
+// Set themes
+// https://www.amcharts.com/docs/v5/concepts/themes/
+root.setThemes([
+  am5themes_Animated.new(root)
+]);
+
+
+// Create chart
+// https://www.amcharts.com/docs/v5/charts/xy-chart/
+var chart = root.container.children.push(am5xy.XYChart.new(root, {
+  panX: false,
+  panY: false,
+  wheelX: "panX",
+  wheelY: "zoomX",
+  layout: root.verticalLayout
+}));
+
+
+var data = [{"year": "1793", columnSettings: {
+    fill: chart.get("colors").next()
+  }, "value": 1}, {"year": "1794", columnSettings: {
+    fill: chart.get("colors").next()
+  }, "value": 2}, {"year": "1795", columnSettings: {
+    fill: chart.get("colors").next()
+  }, "value": 1}, {"year": "1797", columnSettings: {
+    fill: chart.get("colors").next()
+  }, "value": 1}, {"year": "1798", columnSettings: {
+    fill: chart.get("colors").next()
+  }, "value": 3}, {"year": "1800", columnSettings: {
+    fill: chart.get("colors").next()
+  }, "value": 2}, {"year": "1801", columnSettings: {
+    fill: chart.get("colors").next()
+  }, "value": 2}, {"year": "1802", columnSettings: {
+    fill: chart.get("colors").next()
+  }, "value": 4}, {"year": "1803", columnSettings: {
+    fill: chart.get("colors").next()
+  }, "value": 1}, {"year": "1806", columnSettings: {
+    fill: chart.get("colors").next()
+  }, "value": 2}, {"year": "1808", columnSettings: {
+    fill: chart.get("colors").next()
+  }, "value": 2}, {"year": "1809", columnSettings: {
+    fill: chart.get("colors").next()
+  }, "value": 5}, {"year": "1810", columnSettings: {
+    fill: chart.get("colors").next()
+  }, "value": 5}, {"year": "1811", columnSettings: {
+    fill: chart.get("colors").next()
+  }, "value": 8}, {"year": "1812", columnSettings: {
+    fill: chart.get("colors").next()
+  }, "value": 5}, {"year": "1813", columnSettings: {
+    fill: chart.get("colors").next()
+  }, "value": 3}, {"year": "1814", columnSettings: {
+    fill: chart.get("colors").next()
+  }, "value": 14}, {"year": "1815", columnSettings: {
+    fill: chart.get("colors").next()
+  }, "value": 34}, {"year": "1816", columnSettings: {
+    fill: chart.get("colors").next()
+  }, "value": 27}, {"year": "1817", columnSettings: {
+    fill: chart.get("colors").next()
+  }, "value": 36}, {"year": "1818", columnSettings: {
+    fill: chart.get("colors").next()
+  }, "value": 13}, {"year": "1819", columnSettings: {
+    fill: chart.get("colors").next()
+  }, "value": 14}, {"year": "1820", columnSettings: {
+    fill: chart.get("colors").next()
+  }, "value": 25}, {"year": "1821", columnSettings: {
+    fill: chart.get("colors").next()
+  }, "value": 9}, {"year": "1822", columnSettings: {
+    fill: chart.get("colors").next()
+  }, "value": 9}, {"year": "1823", columnSettings: {
+    fill: chart.get("colors").next()
+  }, "value": 16}, {"year": "1824", columnSettings: {
+    fill: chart.get("colors").next()
+  }, "value": 30}, {"year": "1825", columnSettings: {
+    fill: chart.get("colors").next()
+  }, "value": 62}, {"year": "1826", columnSettings: {
+    fill: chart.get("colors").next()
+  }, "value": 37}, {"year": "1827", columnSettings: {
+    fill: chart.get("colors").next()
+  }, "value": 47}, {"year": "1828", columnSettings: {
+    fill: chart.get("colors").next()
+  }, "value": 86}, {"year": "1829", columnSettings: {
+    fill: chart.get("colors").next()
+  }, "value": 125}, {"year": "1830", columnSettings: {
+    fill: chart.get("colors").next()
+  }, "value": 67}, {"year": "1831", columnSettings: {
+    fill: chart.get("colors").next()
+  }, "value": 85}, {"year": "1832", columnSettings: {
+    fill: chart.get("colors").next()
+  }, "value": 57}, {"year": "1833", columnSettings: {
+    fill: chart.get("colors").next()
+  }, "value": 91}, {"year": "1834", columnSettings: {
+    fill: chart.get("colors").next()
+  }, "value": 73}, {"year": "1835", columnSettings: {
+    fill: chart.get("colors").next()
+  }, "value": 104}, {"year": "1836", columnSettings: {
+    fill: chart.get("colors").next()
+  }, "value": 121}, {"year": "1837", columnSettings: {
+    fill: chart.get("colors").next()
+  }, "value": 97}, {"year": "1838", columnSettings: {
+    fill: chart.get("colors").next()
+  }, "value": 69}, {"year": "1839", columnSettings: {
+    fill: chart.get("colors").next()
+  }, "value": 106}, {"year": "1840", columnSettings: {
+    fill: chart.get("colors").next()
+  }, "value": 86}, {"year": "1841", columnSettings: {
+    fill: chart.get("colors").next()
+  }, "value": 85}, {"year": "1842", columnSettings: {
+    fill: chart.get("colors").next()
+  }, "value": 45}, {"year": "1843", columnSettings: {
+    fill: chart.get("colors").next()
+  }, "value": 3}, {"year": "1844", columnSettings: {
+    fill: chart.get("colors").next()
+  }, "value": 58}, {"year": "1845", columnSettings: {
+    fill: chart.get("colors").next()
+  }, "value": 1}]
+
+// Create axes
+// https://www.amcharts.com/docs/v5/charts/xy-chart/axes/
+var xRenderer = am5xy.AxisRendererX.new(root, {
+  cellStartLocation: 0.1,
+  cellEndLocation: 0.9,
+  minGridDistance: 50
+});
+
+var xAxis = chart.xAxes.push(am5xy.CategoryAxis.new(root, {
+  categoryField: "year",
+  renderer: xRenderer,
+  tooltip: am5.Tooltip.new(root, {})
+}));
+
+xRenderer.grid.template.setAll({
+  location: 1
+});
+
+xRenderer.labels.template.setAll({
+  multiLocation: 0.5
+})
+
+xAxis.data.setAll(data);
+
+var yAxis = chart.yAxes.push(am5xy.ValueAxis.new(root, {
+  renderer: am5xy.AxisRendererY.new(root, {
+    strokeOpacity: 0.1
+  })
+}));
+
+
+// Add series
+// https://www.amcharts.com/docs/v5/charts/xy-chart/series/
+var series = chart.series.push(am5xy.ColumnSeries.new(root, {
+  xAxis: xAxis,
+  yAxis: yAxis,
+  valueYField: "value",
+  categoryXField: "year"
+}));
+
+series.columns.template.setAll({
+  tooltipText: "{categoryX}: {valueY}",
+  width: am5.percent(60),
+  tooltipY: 0,
+  strokeOpacity: 0,
+  templateField: "columnSettings"
+});
+
+series.data.setAll(data);
+
+
+// Add export menu
+var exporting = am5plugins_exporting.Exporting.new(root, {
+  menu: am5plugins_exporting.ExportingMenu.new(root, {})
+});
+
+
+// Make stuff animate on load
+// https://www.amcharts.com/docs/v5/concepts/animations/
+series.appear();
+chart.appear(1000, 100);
+
+}); // end am5.ready()
+</script>
+
+<!-- HTML -->
+<div id="chartdiv"></div>
