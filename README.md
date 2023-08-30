@@ -45,11 +45,11 @@ ____
 
 #### References
 
-Berners-Lee, T. (2006, July). Linked Data. Retrieved December 14, 2022, from https: //www.w3.org/DesignIssues/LinkedData.html </br>
+Berners-Lee, T. (2006, July). Linked Data. Retrieved December 14, 2022, from https://www.w3.org/DesignIssues/LinkedData.html </br>
 
 Cristofaro, S., & Spampinato, D. (2021). OntoBelliniLetters: A formal ontology for a corpus of letters of Vincenzo Bellini. In E. Garoufallou & M.-A. Ovalle- Perandones (Eds.), Metadata and Semantic Research (pp. 192–203). Springer International Publishing. </br>
 
-Delestre, C., & Amar, A. (2022). DistilCamemBERT : une distillation du modèle français CamemBERT. CAp (Conférence sur l’Apprentissage automatique). https: //hal.archives-ouvertes.fr/hal-03674695 </br>
+Delestre, C., & Amar, A. (2022). DistilCamemBERT : une distillation du modèle français CamemBERT. CAp (Conférence sur l’Apprentissage automatique). https://hal.archives-ouvertes.fr/hal-03674695 </br>
 
 Dumont, S. (2019). Briefe kommentieren im Semantic Web. DARIAH-DE Working Papers. </br>
 
